@@ -1,15 +1,30 @@
 class AiImessage < Formula
   desc "Local-first Apple Messages RAG index and MCP server"
   homepage "https://github.com/tjameswilliams/ai-imessage"
-  url "https://github.com/tjameswilliams/ai-imessage/archive/refs/tags/v0.1.0.tar.gz"
-  sha256 "0cbd8f1901bfeea3371fabf8949d42163654a1f211d4c2594686be7cc1102574"
+  version "0.1.0"
   license any_of: ["MIT", "Apache-2.0"]
 
   depends_on :macos
-  depends_on "rust" => :build
+
+  on_arm do
+    # Signed (Developer ID) and notarized binary: fast installs, and the
+    # Full Disk Access grant survives upgrades.
+    url "https://github.com/tjameswilliams/ai-imessage/releases/download/v0.1.0/ai-imessage-v0.1.0-aarch64-apple-darwin.tar.gz"
+    sha256 "2529095db67d86ac3f282b8b23f95cc82c820d7a7fbfacff6379e785265107bd"
+  end
+
+  on_intel do
+    url "https://github.com/tjameswilliams/ai-imessage/archive/refs/tags/v0.1.0.tar.gz"
+    sha256 "0cbd8f1901bfeea3371fabf8949d42163654a1f211d4c2594686be7cc1102574"
+    depends_on "rust" => :build
+  end
 
   def install
-    system "cargo", "install", *std_cargo_args
+    if Hardware::CPU.arm?
+      bin.install "ai-imessage"
+    else
+      system "cargo", "install", *std_cargo_args
+    end
   end
 
   def caveats
@@ -28,8 +43,7 @@ class AiImessage < Formula
         ai-imessage service install --http    # keep it synced + serve MCP over HTTP (opt-in)
         ai-imessage connect                   # ready-to-paste MCP client JSON + token
 
-      After upgrades, if `ai-imessage service status` shows permission
-      errors, re-toggle the Full Disk Access entry for the binary.
+      Guide: https://github.com/tjameswilliams/ai-imessage/blob/main/docs/recommended-path.md
     EOS
   end
 
