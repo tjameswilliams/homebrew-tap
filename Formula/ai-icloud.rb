@@ -1,9 +1,9 @@
 class AiIcloud < Formula
   desc "Local-first iCloud Drive document RAG index and MCP server"
   homepage "https://github.com/tjameswilliams/ai-icloud"
-  url "https://github.com/tjameswilliams/ai-icloud/releases/download/v0.1.1/ai-icloud-v0.1.1-aarch64-apple-darwin.tar.gz"
-  sha256 "c67005d74bf6862bc5e5c0c627d2eb33b5829ec3b4018b40d28203e6f1dacd75"
-  version "0.1.1"
+  url "https://github.com/tjameswilliams/ai-icloud/releases/download/v0.1.2/ai-icloud-v0.1.2-aarch64-apple-darwin.tar.gz"
+  sha256 "cacf0737f5229093693f8d1ca443b67a782d5d0c07a85d46507c3327210e7b00"
+  version "0.1.2"
   license "MIT OR Apache-2.0"
 
   depends_on "ffmpeg"
