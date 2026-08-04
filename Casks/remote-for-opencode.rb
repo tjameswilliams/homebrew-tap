@@ -26,6 +26,16 @@ cask "remote-for-opencode" do
   desc "Drive the OpenCode coding agent on your Mac from your iPhone"
   homepage "https://remoteforopencode.com"
 
+  # Livecheck reads the same Sparkle feed the app updates from, so
+  # `brew audit --online` can confirm the stamped version matches what is
+  # actually being served.
+  livecheck do
+    url "https://remoteforopencode.com/downloads/appcast.xml"
+    strategy :sparkle do |item|
+      item.short_version
+    end
+  end
+
   auto_updates true
   # Symbol form already means "this version or newer"; the ">= :sonoma"
   # string spelling is deprecated and warns on every brew invocation.
